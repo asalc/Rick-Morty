@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PADDING -->
+    <dimen name="padding_mini">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium_small">12dp</dimen>
+    <dimen name="padding_regular">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+
+    <!-- MARGIN -->
+    <dimen name="margin_mini">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium_small">12dp</dimen>
+    <dimen name="margin_regular">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+
+    <!-- CORNER RADIUS -->
+    <dimen name="corner_radius_regular">8dp</dimen>
+
+    <!-- ELEVATIONS -->
+    <dimen name="elevation_regular">4dp</dimen>
+
+    <!-- IMAGE SIZES -->
+    <dimen name="user_pic_size">125dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="dialog_character_photo_size">200dp</dimen>
+
+    <!-- PROGRESS BAR -->
+    <dimen name="progress_bar_size">70dp</dimen>
+
+    <!-- ITEM SIZES -->
+    <dimen name="item_character_height">225dp</dimen>
+</resources>
