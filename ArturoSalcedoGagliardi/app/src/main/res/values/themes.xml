@@ -10,7 +10,14 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/dark_grey</item>
         <!-- Customize your theme here. -->
+        <item name="autoCompleteTextViewStyle">@style/custom_cursor_autocomplete_view</item>
     </style>
+
+    <!-- SEARCH VIEW STYLES -->
+    <style name="custom_cursor_autocomplete_view" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/custom_cursor</item>
+    </style>
+
 </resources>
