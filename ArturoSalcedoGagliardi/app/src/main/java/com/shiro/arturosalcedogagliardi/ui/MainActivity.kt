@@ -1,7 +1,8 @@
-package com.shiro.arturosalcedogagliardi
+package com.shiro.arturosalcedogagliardi.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.shiro.arturosalcedogagliardi.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
