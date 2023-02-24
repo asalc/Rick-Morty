@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Arturo Salcedo Gagliardi</string>
+    <string name="characters">Characters</string>
+    <string name="mock_dialog_title">Title</string>
+    <string name="mock_dialog_text">Text</string>
+    <string name="name_title">Name:</string>
+    <string name="gender_title">Gender:</string>
+    <string name="status_title">Status:</string>
+    <string name="species_title">Species:</string>
+    <string name="origin_title">Origin:</string>
+    <string name="location_title">Location:</string>
 
     <!-- ERRORS -->
     <string name="error_title">Error</string>

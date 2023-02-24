@@ -15,6 +15,15 @@
         <item name="autoCompleteTextViewStyle">@style/custom_cursor_autocomplete_view</item>
     </style>
 
+    <!-- TEXT STYLES -->
+    <style name="text_large_bold">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="text_body_regular">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- SEARCH VIEW STYLES -->
     <style name="custom_cursor_autocomplete_view" parent="Widget.AppCompat.AutoCompleteTextView">
         <item name="android:textCursorDrawable">@drawable/custom_cursor</item>
