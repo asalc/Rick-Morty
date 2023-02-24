@@ -1,7 +1,5 @@
 package com.shiro.arturosalcedogagliardi.helpers.extensions
 
-import com.shiro.arturosalcedogagliardi.data.mappers.toDomain
-import com.shiro.arturosalcedogagliardi.data.source.remote.api.ApiError
 import retrofit2.Response
 
 inline fun <reified T : Any> Any.cast(): T {
