@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Arturo Salcedo Gagliardi</string>
+
+    <!-- ERRORS -->
+    <string name="error_title">Error</string>
+    <string name="network_error">A connection error has occurred.</string>
+    <string name="not_found_error">No result was found.</string>
+    <string name="bad_request_error">Check the entered data.</string>
+    <string name="timeout_error">Server\'s response has been too slow.</string>
+    <string name="server_error">An internal server error has occurred.</string>
+    <string name="unauthorized_error">You don\'t have the needed permissions to make this request.</string>
+    <string name="unavailable_error">This service is temporarily unavailable.</string>
+    <string name="unknown_error">An error has occurred when making your request.</string>
+
 </resources>
