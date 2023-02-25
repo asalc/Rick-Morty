@@ -19,10 +19,4 @@ interface CharactersApi {
         @Path("characterId") characterId: Int
     ): Response<CharacterRemote>
 
-    @GET("character/")
-    suspend fun searchCharacters(
-        @Query("name") name: String,
-        @Query("page") page: Int
-    ): Response<CharacterResultRemote>
-
 }

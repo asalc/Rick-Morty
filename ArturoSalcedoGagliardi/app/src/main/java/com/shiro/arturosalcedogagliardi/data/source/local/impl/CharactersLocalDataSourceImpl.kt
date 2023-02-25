@@ -16,10 +16,6 @@ class CharactersLocalDataSourceImpl @Inject constructor(
         return charactersDao.getCharacterDetails(characterId)
     }
 
-    override suspend fun searchCharacters(name: String): List<CharacterLocal> {
-        return charactersDao.searchCharacters(name)
-    }
-
     override suspend fun saveCharacter(character: CharacterLocal) {
         charactersDao.insertCharacter(character)
     }

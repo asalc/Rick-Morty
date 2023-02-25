@@ -19,8 +19,4 @@ class CharactersRemoteDataSourceImpl @Inject constructor(
     override suspend fun getCharacterDetails(characterId: Int): Result<CharacterRemote?> {
         return callResult { charactersApi.getCharacterDetails(characterId) }
     }
-
-    override suspend fun searchCharacters(name: String, page: Int): Result<CharacterResultRemote?> {
-        return callResult { charactersApi.searchCharacters(name, page) }
-    }
 }

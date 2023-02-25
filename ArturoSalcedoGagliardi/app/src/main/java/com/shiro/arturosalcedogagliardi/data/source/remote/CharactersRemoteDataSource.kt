@@ -6,5 +6,4 @@ import com.shiro.arturosalcedogagliardi.data.model.character.CharacterRemote
 interface CharactersRemoteDataSource {
     suspend fun getAllCharacters(page: Int): Result<CharacterResultRemote?>
     suspend fun getCharacterDetails(characterId: Int): Result<CharacterRemote?>
-    suspend fun searchCharacters(name: String, page: Int): Result<CharacterResultRemote?>
 }

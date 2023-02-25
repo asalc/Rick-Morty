@@ -9,6 +9,7 @@ import com.shiro.arturosalcedogagliardi.data.source.remote.api.ApiError
 import com.shiro.arturosalcedogagliardi.domain.model.Character
 import com.shiro.arturosalcedogagliardi.domain.model.CharacterResult
 import com.shiro.arturosalcedogagliardi.domain.repository.CharactersRepository
+import com.shiro.arturosalcedogagliardi.helpers.Constants
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(
@@ -23,12 +24,19 @@ class CharactersRepositoryImpl @Inject constructor(
                     it.toLocal()
                 )
             }
-            response.map {
-                it?.toDomain()
-            }
+            Result.success(
+                charactersLocalDataSource.getAllCharacters()
+                    .subList(
+                        (page - 1) * Constants.CHARACTERS_PER_PAGE,
+                        page * Constants.CHARACTERS_PER_PAGE
+                    )
+                    .toCharacterResult().apply {
+                        info = response.getOrNull()?.info
+                    }
+            )
         } else {
             val exception = response.exceptionOrNull()
-            if (exception is ApiError.Network) {
+            if (exception is ApiError) {
                 val localResponse = charactersLocalDataSource.getAllCharacters()
                 Result.success(localResponse.toCharacterResult())
             } else {
@@ -48,23 +56,6 @@ class CharactersRepositoryImpl @Inject constructor(
             if (exception is ApiError.Network) {
                 val localResponse = charactersLocalDataSource.getCharacterDetails(characterId)
                 Result.success(localResponse.toDomain())
-            } else {
-                Result.failure(exception ?: Exception())
-            }
-        }
-    }
-
-    override suspend fun searchCharacters(name: String, page: Int): Result<CharacterResult?> {
-        val response = charactersRemoteDataSource.searchCharacters(name, page)
-        return if (response.isSuccess) {
-            response.map {
-                it?.toDomain()
-            }
-        } else {
-            val exception = response.exceptionOrNull()
-            if (exception is ApiError.Network) {
-                val localResponse = charactersLocalDataSource.searchCharacters(name)
-                Result.success(localResponse.toCharacterResult())
             } else {
                 Result.failure(exception ?: Exception())
             }
