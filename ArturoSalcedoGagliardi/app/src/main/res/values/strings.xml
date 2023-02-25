@@ -5,14 +5,17 @@
     <string name="mock_dialog_title">Title</string>
     <string name="mock_dialog_text">Text</string>
     <string name="name_title">Name</string>
-    <string name="gender_title">Gender</string>
-    <string name="status_title">Status</string>
-    <string name="species_title">Species</string>
+    <string name="gender_title">Gender:</string>
+    <string name="status_title">Status:</string>
+    <string name="species_title">Species:</string>
     <string name="origin_title">Origin</string>
     <string name="location_title">Location</string>
+    <string name="save_changes">Save changes</string>
 
     <!-- DIALOGS -->
     <string name="accept">Accept</string>
+    <string name="success">Success</string>
+    <string name="changes_saved_successfully">Changes were saved successfully.</string>
 
     <!-- SEARCH VIEW -->
     <string name="query_hint">Enter a character\'s name</string>

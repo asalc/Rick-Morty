@@ -1,12 +1,14 @@
 package com.shiro.arturosalcedogagliardi.domain.model
 
+import java.io.Serializable
+
 class Character(
     val id: Int? = null,
-    val name: String? = null,
+    var name: String? = null,
     val status: String? = null,
-    val species: String? = null,
+    var species: String? = null,
     val gender: String? = null,
-    val origin: String? = null,
-    val location: String? = null,
+    var origin: String? = null,
+    var location: String? = null,
     val image: String? = null
-)
+): Serializable

@@ -7,4 +7,5 @@ interface CharactersLocalDataSource {
     suspend fun getCharacterDetails(characterId: Int): CharacterLocal?
     suspend fun saveCharacter(character: CharacterLocal)
     suspend fun updateCharacter(remoteCharacter: CharacterLocal)
+    suspend fun updateCharacterFromDomain(character: CharacterLocal): Result<Boolean?>
 }

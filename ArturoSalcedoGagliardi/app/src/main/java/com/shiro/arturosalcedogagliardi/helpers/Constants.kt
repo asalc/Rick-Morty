@@ -14,6 +14,9 @@ object Constants {
     const val DIALOG_ACCEPT = "dialog_accept"
     const val DIALOG_CANCEL = "dialog_cancel"
 
+    //INTENT KEYS
+    const val CHARACTER = "character"
+
     //CHARACTER STATUS
     const val ALIVE = "Alive"
     const val DEAD = "Dead"

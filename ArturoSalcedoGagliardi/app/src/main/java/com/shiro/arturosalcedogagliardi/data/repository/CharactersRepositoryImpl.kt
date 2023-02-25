@@ -65,4 +65,8 @@ class CharactersRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun updateCharacter(character: Character): Result<Boolean> {
+        return charactersLocalDataSource.updateCharacterFromDomain(character.toLocal()).map { it ?: false }
+    }
 }

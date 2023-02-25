@@ -11,8 +11,10 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/dark_grey</item>
+        <item name="android:navigationBarColor">@color/dark_grey</item>
         <!-- Customize your theme here. -->
         <item name="autoCompleteTextViewStyle">@style/custom_cursor_autocomplete_view</item>
+        <item name="colorControlActivated">@color/yellow_title</item>
     </style>
 
     <!-- TEXT STYLES -->
@@ -48,7 +50,23 @@
 
     <!-- TEXT INPUT STYLES -->
     <style name="CustomInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/yellow_title</item>
+        <item name="boxBackgroundColor">@color/grey</item>
+        <item name="boxStrokeColor">@color/selector_text_input_layout</item>
+        <item name="hintTextColor">@color/selector_text_input_layout</item>
+        <item name="helperTextTextColor">@color/selector_text_input_layout</item>
+        <item name="android:layout_marginHorizontal">@dimen/margin_regular</item>
+        <item name="android:layout_marginTop">@dimen/margin_small</item>
+        <item name="android:textColorHint">@color/selector_text_input_layout</item>
+    </style>
+
+    <style name="CustomInputText">
+        <item name="android:textColor">@color/selector_text_input_layout</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColorHighlight">@color/light_grey</item>
+    </style>
+
+    <style name="CustomTextSelectedHandles" parent="">
+        <item name="colorControlActivated">@color/yellow_title</item>
     </style>
 
 </resources>

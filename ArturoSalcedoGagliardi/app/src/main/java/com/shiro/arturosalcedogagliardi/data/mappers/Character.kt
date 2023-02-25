@@ -2,6 +2,8 @@ package com.shiro.arturosalcedogagliardi.data.mappers
 
 import com.shiro.arturosalcedogagliardi.data.model.character.CharacterLocal
 import com.shiro.arturosalcedogagliardi.data.model.character.CharacterRemote
+import com.shiro.arturosalcedogagliardi.data.model.character.location.LocationLocal
+import com.shiro.arturosalcedogagliardi.data.model.character.origin.OriginLocal
 import com.shiro.arturosalcedogagliardi.domain.model.Character
 import com.shiro.arturosalcedogagliardi.domain.model.CharacterResult
 
@@ -41,6 +43,18 @@ fun CharacterLocal.toDomain() =
         gender = this.gender,
         origin = this.origin?.toDomain(),
         location = this.location?.toDomain(),
+        image = this.image
+    )
+
+fun Character.toLocal() =
+    CharacterLocal(
+        id = this.id,
+        name = this.name,
+        status = this.status,
+        species = this.species,
+        gender = this.gender,
+        origin = OriginLocal(originName = this.origin ?: ""),
+        location = LocationLocal(locationName = this.location ?: ""),
         image = this.image
     )
 
