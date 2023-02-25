@@ -12,11 +12,37 @@ class CharactersLocalDataSourceImpl @Inject constructor(
         return charactersDao.getAllCharacters()
     }
 
-    override suspend fun getCharacterDetails(characterId: Int): CharacterLocal {
+    override suspend fun getCharacterDetails(characterId: Int): CharacterLocal? {
         return charactersDao.getCharacterDetails(characterId)
     }
 
     override suspend fun saveCharacter(character: CharacterLocal) {
         charactersDao.insertCharacter(character)
+    }
+
+    override suspend fun updateCharacter(
+        remoteCharacter: CharacterLocal
+    ) {
+        remoteCharacter.id?.let {
+            getCharacterDetails(it)?.let { character ->
+                charactersDao.updateCharacter(
+                    character.apply {
+                        id = character.id
+                        name = character.name
+                        status = remoteCharacter.status
+                        species = character.species
+                        type = remoteCharacter.type
+                        gender = remoteCharacter.gender
+                        origin = character.origin
+                        location = character.location
+                        image = remoteCharacter.image
+                        url = remoteCharacter.image
+                        created = remoteCharacter.created
+                    }
+                )
+            } ?: run {
+                saveCharacter(remoteCharacter)
+            }
+        }
     }
 }

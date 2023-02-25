@@ -20,7 +20,7 @@ class CharactersRepositoryImpl @Inject constructor(
         val response = charactersRemoteDataSource.getAllCharacters(page)
         return if (response.isSuccess) {
             response.getOrNull()?.results?.forEach {
-                charactersLocalDataSource.saveCharacter(
+                charactersLocalDataSource.updateCharacter(
                     it.toLocal()
                 )
             }
@@ -55,7 +55,11 @@ class CharactersRepositoryImpl @Inject constructor(
             val exception = response.exceptionOrNull()
             if (exception is ApiError.Network) {
                 val localResponse = charactersLocalDataSource.getCharacterDetails(characterId)
-                Result.success(localResponse.toDomain())
+                localResponse?.toDomain()?.let {
+                    Result.success(it)
+                } ?: run {
+                    Result.failure(ApiError.NotFound())
+                }
             } else {
                 Result.failure(exception ?: Exception())
             }
