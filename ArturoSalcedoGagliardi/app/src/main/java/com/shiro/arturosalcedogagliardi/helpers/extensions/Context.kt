@@ -2,6 +2,8 @@ package com.shiro.arturosalcedogagliardi.helpers.extensions
 
 import android.app.Dialog
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,19 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import com.shiro.arturosalcedogagliardi.databinding.CustomDialogBinding
 import com.shiro.arturosalcedogagliardi.helpers.Constants
+
+val Context.isNetworkAvailable: Boolean
+    get() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
+    }
 
 fun Context.showDoubleDialog(
     data: Map<String, *>,
