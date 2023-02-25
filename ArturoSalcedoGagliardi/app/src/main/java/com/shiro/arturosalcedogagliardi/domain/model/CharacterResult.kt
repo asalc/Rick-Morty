@@ -1,6 +1,6 @@
 package com.shiro.arturosalcedogagliardi.domain.model
 
 class CharacterResult(
-    val info: Pager? = null,
+    var info: Pager? = null,
     val results: List<Character>? = null
 )

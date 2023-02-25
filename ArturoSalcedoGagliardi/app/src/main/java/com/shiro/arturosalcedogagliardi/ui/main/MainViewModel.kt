@@ -3,28 +3,24 @@ package com.shiro.arturosalcedogagliardi.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shiro.arturosalcedogagliardi.App
-import com.shiro.arturosalcedogagliardi.data.source.remote.api.ApiError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.shiro.arturosalcedogagliardi.domain.model.Character
 import com.shiro.arturosalcedogagliardi.domain.model.Pager
 import com.shiro.arturosalcedogagliardi.domain.use_cases.GetAllCharactersUseCase
-import com.shiro.arturosalcedogagliardi.domain.use_cases.GetCharactersBySearchUseCase
-import com.shiro.arturosalcedogagliardi.helpers.extensions.isNetworkAvailable
 import com.shiro.arturosalcedogagliardi.helpers.extensions.parseException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getAllCharactersUseCase: GetAllCharactersUseCase,
-    private val getCharactersBySearchUseCase: GetCharactersBySearchUseCase
 ) : ViewModel() {
 
-    private val isLoading = MutableLiveData<Boolean>()
-    private val searchQuery = MutableLiveData<String>()
-    private val charactersList = MutableLiveData<ArrayList<Character>>()
-    private val errorResourceId = MutableLiveData<Int>()
+    val isLoading = MutableLiveData<Boolean>()
+    val charactersList = MutableLiveData<ArrayList<Character>>()
+    val errorResourceId = MutableLiveData<Int>()
 
     private var page: Int = 1
     private var hasNext: Boolean = true
@@ -32,43 +28,32 @@ class MainViewModel @Inject constructor(
 
     fun getPage(): Int = page
     fun hastNext(): Boolean = hasNext
-    fun isSearch(): Boolean = !searchQuery.value.isNullOrEmpty()
+    fun isReset(): Boolean = resetList
 
     fun refreshData() {
-
+        resetPage()
+        resetList = true
+        getCharacters()
     }
 
-    fun setSearchQuery(query: String, submit: Boolean = false) {
-        searchQuery.value = query
-        if (submit)
-            refreshData()
-    }
-
-    fun resetQuery() { searchQuery.value = "" }
     fun clearError() { errorResourceId.value = 0 }
 
     fun getCharacters() {
-        if (App.instance.isNetworkAvailable) {
-            isLoading.value = true
-            viewModelScope.launch {
-                getAllCharactersUseCase(page)
-                    .onSuccess { characterResult ->
-                        characterResult?.results?.let { setCharactersList(it) }
-                        characterResult?.info?.let { setPage(it) }
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            getAllCharactersUseCase(page)
+                .onFailure { parseFailure(it) }
+                .onSuccess { characterResult ->
+                    characterResult?.results?.let { setCharactersList(it) }
+                    characterResult?.info?.let {
+                        setPage(it)
                     }
-                    .onFailure {
-                        val exception = it as? Exception
-                        val apiError = exception?.parseException()
-                        errorResourceId.value = apiError?.errorMessage
-                    }
+                }
+            withContext(Dispatchers.Main) {
+                isLoading.value = false
+                resetList = false
             }
-        } else {
-            errorResourceId.value = ApiError.Network().errorMessage
         }
-    }
-
-    fun getCharactersBySearch() {
-
     }
 
     private fun endPage() { page = 0 }
@@ -82,11 +67,22 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun setCharactersList(characters: List<Character>) {
-        val auxCharactersList =
-            if (resetList) arrayListOf()
-            else charactersList.value
-        auxCharactersList?.addAll(characters)
-        charactersList.value = auxCharactersList
+    private suspend fun setCharactersList(characters: List<Character>) {
+        withContext(Dispatchers.Main) {
+            val auxCharactersList: ArrayList<Character> =
+                if (resetList) arrayListOf()
+                else charactersList.value ?: arrayListOf()
+            auxCharactersList.addAll(characters)
+            charactersList.value = auxCharactersList
+        }
+    }
+
+    private suspend fun parseFailure(throwable: Throwable) {
+        withContext(Dispatchers.Main) {
+            val exception = throwable as? Exception
+            val apiError = exception?.parseException()
+            errorResourceId.value = apiError?.errorMessage
+            endPage()
+        }
     }
 }
