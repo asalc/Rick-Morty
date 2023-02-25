@@ -13,4 +13,15 @@ object Constants {
     const val DIALOG_DESCRIPTION = "dialog_description"
     const val DIALOG_ACCEPT = "dialog_accept"
     const val DIALOG_CANCEL = "dialog_cancel"
+
+    //CHARACTER STATUS
+    const val ALIVE = "Alive"
+    const val DEAD = "Dead"
+
+    //CHARACTER GENDER
+    const val MALE = "Male"
+    const val FEMALE = "Female"
+
+    //CHARACTER LIMIT PER PAGE
+    const val CHARACTERS_PER_PAGE = 20
 }
