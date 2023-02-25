@@ -24,6 +24,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- TOOLBAR STYLES -->
+    <style name="standard_toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/grey</item>
+        <item name="titleTextColor">@color/yellow_title</item>
+    </style>
+
     <!-- SEARCH VIEW STYLES -->
     <style name="custom_cursor_autocomplete_view" parent="Widget.AppCompat.AutoCompleteTextView">
         <item name="android:textCursorDrawable">@drawable/custom_cursor</item>

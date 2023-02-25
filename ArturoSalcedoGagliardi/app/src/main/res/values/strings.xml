@@ -1,4 +1,5 @@
 <resources>
+    <!-- MISCELLANEA -->
     <string name="app_name">Arturo Salcedo Gagliardi</string>
     <string name="characters">Characters</string>
     <string name="mock_dialog_title">Title</string>
@@ -9,6 +10,12 @@
     <string name="species_title">Species:</string>
     <string name="origin_title">Origin:</string>
     <string name="location_title">Location:</string>
+
+    <!-- DIALOGS -->
+    <string name="accept">Accept</string>
+
+    <!-- SEARCH VIEW -->
+    <string name="query_hint">Enter a character\'s name</string>
 
     <!-- ERRORS -->
     <string name="error_title">Error</string>

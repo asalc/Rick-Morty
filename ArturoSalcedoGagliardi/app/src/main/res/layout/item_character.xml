@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="character"
+            type="com.shiro.arturosalcedogagliardi.domain.model.Character" />
+
+        <import type="com.shiro.arturosalcedogagliardi.helpers.extensions.StringKt" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_character_height"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:cardBackgroundColor="@color/card_grey"
+        app:cardCornerRadius="@dimen/corner_radius_regular"
+        app:cardElevation="@dimen/elevation_regular">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/image_user"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/user_pic_size"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/name_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_user" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_medium_small"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="@{StringKt.capitalize(character.name)}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/text_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/text_name"
+                app:layout_constraintTop_toTopOf="@id/text_name"
+                tools:text="Paco" />
+
+            <TextView
+                android:id="@+id/text_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:text="@string/gender_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+            <ImageView
+                android:id="@+id/image_gender"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginStart="@dimen/margin_mini"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@id/text_gender"
+                app:layout_constraintStart_toEndOf="@id/text_gender"
+                app:layout_constraintTop_toTopOf="@id/text_gender"
+                tools:src="@drawable/ic_gender_undefined" />
+
+            <TextView
+                android:id="@+id/text_status_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingStart="@dimen/padding_medium_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/status_title"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_gender" />
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{StringKt.capitalize(character.status)}"
+                app:layout_constraintBottom_toBottomOf="@id/text_status_title"
+                app:layout_constraintStart_toEndOf="@id/text_status_title"
+                app:layout_constraintTop_toTopOf="@id/text_status_title"
+                tools:text="Alive"
+                tools:textColor="@color/green" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
