@@ -2,6 +2,8 @@ package com.shiro.arturosalcedogagliardi.helpers.extensions
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.Gravity
@@ -49,10 +51,7 @@ fun Context.showDoubleDialog(
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
     dialog.setContentView(binding.root)
     dialog.window?.setGravity(Gravity.CENTER)
-    dialog.window?.setLayout(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT
-    )
+    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
     binding.buttonAccept.setOnClickListener {
         dialog.dismiss()
