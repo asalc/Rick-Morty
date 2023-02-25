@@ -2,6 +2,7 @@ package com.shiro.arturosalcedogagliardi.data.repository
 
 import com.shiro.arturosalcedogagliardi.data.mappers.toCharacterResult
 import com.shiro.arturosalcedogagliardi.data.mappers.toDomain
+import com.shiro.arturosalcedogagliardi.data.mappers.toLocal
 import com.shiro.arturosalcedogagliardi.data.source.local.CharactersLocalDataSource
 import com.shiro.arturosalcedogagliardi.data.source.remote.CharactersRemoteDataSource
 import com.shiro.arturosalcedogagliardi.data.source.remote.api.ApiError
@@ -17,6 +18,11 @@ class CharactersRepositoryImpl @Inject constructor(
     override suspend fun getAllCharacters(page: Int): Result<CharacterResult?> {
         val response = charactersRemoteDataSource.getAllCharacters(page)
         return if (response.isSuccess) {
+            response.getOrNull()?.results?.forEach {
+                charactersLocalDataSource.saveCharacter(
+                    it.toLocal()
+                )
+            }
             response.map {
                 it?.toDomain()
             }
