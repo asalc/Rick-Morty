@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
 
     fun getCharacters() {
         isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getAllCharactersUseCase(page)
                 .onFailure {
                     parseFailure(it)
@@ -54,30 +54,24 @@ class MainViewModel @Inject constructor(
                         setPage(it)
                     }
                 }
-            withContext(Dispatchers.Main) {
-                isLoading.value = false
-                resetList = false
-            }
+            isLoading.value = false
+            resetList = false
         }
     }
 
     fun deleteCharacter(character: Character) {
         isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             deleteCharacterUseCase(character)
                 .onFailure { parseFailure(it) }
                 .onSuccess { result ->
                     result?.let {
-                        withContext(Dispatchers.Main) {
-                            deletedCharacterId.value = it
-                        }
+                        deletedCharacterId.value = it
                     } ?: run {
                         parseFailure(ApiError.Unknown())
                     }
                 }
-            withContext(Dispatchers.Main) {
-                isLoading.value = false
-            }
+            isLoading.value = false
         }
     }
 
@@ -92,21 +86,17 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private suspend fun setCharactersList(characters: List<Character>) {
-        withContext(Dispatchers.Main) {
-            val auxCharactersList: ArrayList<Character> =
-                if (resetList) arrayListOf()
-                else charactersList.value ?: arrayListOf()
-            auxCharactersList.addAll(characters)
-            charactersList.value = auxCharactersList
-        }
+    private fun setCharactersList(characters: List<Character>) {
+        val auxCharactersList: ArrayList<Character> =
+            if (resetList) arrayListOf()
+            else charactersList.value ?: arrayListOf()
+        auxCharactersList.addAll(characters)
+        charactersList.value = auxCharactersList
     }
 
-    private suspend fun parseFailure(throwable: Throwable) {
-        withContext(Dispatchers.Main) {
-            val exception = throwable as? Exception
-            val apiError = exception?.parseException()
-            errorResourceId.value = apiError?.errorMessage
-        }
+    private fun parseFailure(throwable: Throwable) {
+        val exception = throwable as? Exception
+        val apiError = exception?.parseException()
+        errorResourceId.value = apiError?.errorMessage
     }
 }

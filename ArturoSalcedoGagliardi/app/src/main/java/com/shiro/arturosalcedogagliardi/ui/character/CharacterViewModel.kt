@@ -40,19 +40,15 @@ class CharacterViewModel @Inject constructor(
 
     fun saveChanges() {
         character.value?.let {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 updateCharacterUseCase(it)
                     .onSuccess { isSuccess ->
-                        withContext(Dispatchers.Main) {
-                            characterUpdateSuccessful.value = isSuccess
-                        }
+                        characterUpdateSuccessful.value = isSuccess
                     }
                     .onFailure {
-                        withContext(Dispatchers.Main) {
-                            characterError.value =
-                                if (it is ApiError) it.errorMessage
-                                else ApiError.Unknown().errorMessage
-                        }
+                        characterError.value =
+                            if (it is ApiError) it.errorMessage
+                            else ApiError.Unknown().errorMessage
                     }
             }
         }
