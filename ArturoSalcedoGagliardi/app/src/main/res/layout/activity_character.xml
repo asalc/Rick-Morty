@@ -31,10 +31,10 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:foreground="?selectableItemBackgroundBorderless"
+                android:background="?selectableItemBackgroundBorderless"
                 android:onClick="@{() -> activity.closeActivity()}"
                 android:src="@drawable/ic_close"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedCorners"/>
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.RoundedCorners" />
 
         </LinearLayout>
 

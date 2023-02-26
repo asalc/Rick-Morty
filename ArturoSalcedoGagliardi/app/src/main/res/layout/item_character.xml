@@ -111,6 +111,18 @@
                 tools:text="Alive"
                 tools:textColor="@color/green" />
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginEnd="@dimen/margin_regular"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf="@id/text_status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.RoundedCorners" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
