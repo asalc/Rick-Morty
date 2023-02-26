@@ -69,4 +69,15 @@ class CharactersLocalDataSourceImpl @Inject constructor(
             Result.failure(exception.parseException())
         }
     }
+
+    override suspend fun deleteCharacter(
+        character: CharacterLocal
+    ): Result<Boolean> {
+        return try {
+            charactersDao.deleteCharacter(character)
+            Result.success(true)
+        } catch (exception: Exception) {
+            Result.failure(exception.parseException())
+        }
+    }
 }

@@ -3,9 +3,11 @@ package com.shiro.arturosalcedogagliardi.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shiro.arturosalcedogagliardi.data.source.remote.api.ApiError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import com.shiro.arturosalcedogagliardi.domain.model.Character
 import com.shiro.arturosalcedogagliardi.domain.model.Pager
+import com.shiro.arturosalcedogagliardi.domain.use_cases.DeleteCharacterUseCase
 import com.shiro.arturosalcedogagliardi.domain.use_cases.GetAllCharactersUseCase
 import com.shiro.arturosalcedogagliardi.helpers.extensions.parseException
 import kotlinx.coroutines.Dispatchers
@@ -16,19 +18,19 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getAllCharactersUseCase: GetAllCharactersUseCase,
+    private val deleteCharacterUseCase: DeleteCharacterUseCase
 ) : ViewModel() {
 
     val isLoading = MutableLiveData<Boolean>()
     val charactersList = MutableLiveData<ArrayList<Character>>()
+    val deletedCharacterId = MutableLiveData<Int>()
     val errorResourceId = MutableLiveData<Int>()
 
     private var page: Int = 1
     private var hasNext: Boolean = true
     private var resetList: Boolean = false
 
-    fun getPage(): Int = page
     fun hastNext(): Boolean = hasNext
-    fun isReset(): Boolean = resetList
 
     fun refreshData() {
         resetPage()
@@ -42,7 +44,10 @@ class MainViewModel @Inject constructor(
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             getAllCharactersUseCase(page)
-                .onFailure { parseFailure(it) }
+                .onFailure {
+                    parseFailure(it)
+                    endPage()
+                }
                 .onSuccess { characterResult ->
                     characterResult?.results?.let { setCharactersList(it) }
                     characterResult?.info?.let {
@@ -52,6 +57,26 @@ class MainViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                 isLoading.value = false
                 resetList = false
+            }
+        }
+    }
+
+    fun deleteCharacter(character: Character) {
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteCharacterUseCase(character)
+                .onFailure { parseFailure(it) }
+                .onSuccess { result ->
+                    result?.let {
+                        withContext(Dispatchers.Main) {
+                            deletedCharacterId.value = it
+                        }
+                    } ?: run {
+                        parseFailure(ApiError.Unknown())
+                    }
+                }
+            withContext(Dispatchers.Main) {
+                isLoading.value = false
             }
         }
     }
@@ -82,7 +107,6 @@ class MainViewModel @Inject constructor(
             val exception = throwable as? Exception
             val apiError = exception?.parseException()
             errorResourceId.value = apiError?.errorMessage
-            endPage()
         }
     }
 }

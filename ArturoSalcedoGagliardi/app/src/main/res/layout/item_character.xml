@@ -112,12 +112,13 @@
                 tools:textColor="@color/green" />
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_delete"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginEnd="@dimen/margin_regular"
+                android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="?selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_delete"
                 app:layout_constraintBottom_toBottomOf="@id/text_status"
                 app:layout_constraintEnd_toEndOf="parent"

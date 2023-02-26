@@ -16,4 +16,7 @@ interface CharactersDao {
 
     @Update
     fun updateCharacter(character: CharacterLocal)
+
+    @Delete
+    fun deleteCharacter(character: CharacterLocal)
 }

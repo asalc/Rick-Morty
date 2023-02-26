@@ -70,12 +70,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        adapter = CharactersAdapter {
-            launcher.launch(
-                Intent(this, CharacterActivity::class.java)
-                    .putExtra(Constants.CHARACTER, it)
-            )
-        }
+        adapter = CharactersAdapter(
+            onCharacterClick = {
+                launcher.launch(
+                    Intent(this, CharacterActivity::class.java)
+                        .putExtra(Constants.CHARACTER, it)
+                )
+            },
+            onDelete = {
+                viewModel.deleteCharacter(it)
+            }
+        )
         binding.recyclerCharacters.adapter = adapter
     }
 
@@ -111,6 +116,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.charactersList.observe(this) {
             adapter.submitList(it)
             adapter.notifyItemRangeChanged(0, adapter.itemCount)
+        }
+
+        viewModel.deletedCharacterId.observe(this) { characterId ->
+            adapter.currentList.firstOrNull {
+                it.id == characterId
+            }?.let {
+                val index = adapter.currentList.indexOf(it)
+                val newList = adapter.currentList.toMutableList()
+                newList.remove(it)
+                adapter.submitList(newList) {
+                    //adapter.notifyItemRemoved(index)
+                }
+            }
         }
 
         viewModel.errorResourceId.observe(this) {

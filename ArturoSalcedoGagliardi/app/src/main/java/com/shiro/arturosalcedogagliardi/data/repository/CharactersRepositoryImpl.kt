@@ -67,6 +67,23 @@ class CharactersRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateCharacter(character: Character): Result<Boolean> {
-        return charactersLocalDataSource.updateCharacterFromDomain(character.toLocal()).map { it ?: false }
+        return charactersLocalDataSource.updateCharacterFromDomain(character.toLocal())
+    }
+
+    override suspend fun deleteCharacter(character: Character): Result<Int?> {
+        val response = charactersLocalDataSource.deleteCharacter(character.toLocal())
+        return if (response.isSuccess) {
+            if (response.getOrNull() == true) {
+                character.id?.let {
+                    Result.success(it)
+                } ?: Result.failure(ApiError.Unknown())
+            } else {
+                Result.failure(ApiError.Unknown())
+            }
+        } else {
+            response.exceptionOrNull()?.let {
+                Result.failure(it)
+            } ?: Result.failure(ApiError.Unknown())
+        }
     }
 }

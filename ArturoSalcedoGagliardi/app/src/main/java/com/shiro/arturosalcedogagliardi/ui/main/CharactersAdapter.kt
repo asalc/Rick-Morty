@@ -15,7 +15,8 @@ import com.shiro.arturosalcedogagliardi.domain.model.Character
 import com.shiro.arturosalcedogagliardi.helpers.Constants
 
 class CharactersAdapter(
-    private val onCharacterClick: (Character) -> Unit
+    private val onCharacterClick: (Character) -> Unit,
+    private val onDelete: (Character) -> Unit
 ): ListAdapter<Character, CharactersAdapter.CharacterViewHolder>(CharactersDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
@@ -23,7 +24,7 @@ class CharactersAdapter(
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.bind(getItem(position), onCharacterClick)
+        holder.bind(getItem(position), onCharacterClick, onDelete)
     }
 
     class CharacterViewHolder(
@@ -32,13 +33,15 @@ class CharactersAdapter(
 
         fun bind(
             item: Character,
-            onCharacterClick: (Character) -> Unit
+            onCharacterClick: (Character) -> Unit,
+            onDelete: (Character) -> Unit
         ) {
 
             val context = binding.root.context
 
             binding.character = item
             binding.layoutItem.setOnClickListener { onCharacterClick(item) }
+            binding.imageDelete.setOnClickListener { onDelete(item) }
 
             Glide.with(context)
                 .load(item.image)
