@@ -39,6 +39,14 @@ class CharacterActivity: AppCompatActivity() {
         viewModel.checkIntent(intent.extras)
     }
 
+    fun closeActivity() {
+        setResult(
+            RESULT_CANCELED,
+            Intent()
+        )
+        finish()
+    }
+
     private fun initObservers() {
         viewModel.character.observe(this) { character ->
             Glide.with(this)
@@ -95,6 +103,7 @@ class CharacterActivity: AppCompatActivity() {
                         RESULT_OK,
                         Intent().putExtra(Constants.CHARACTER, viewModel.character.value)
                     )
+                    finish()
                 }
         }
     }

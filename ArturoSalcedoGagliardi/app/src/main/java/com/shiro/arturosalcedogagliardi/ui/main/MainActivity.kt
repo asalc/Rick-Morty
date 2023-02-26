@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: CharactersAdapter
 
-    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(Intent(this, CharacterActivity::class.java))) { activityResult ->
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
         if (activityResult.resultCode == RESULT_OK) {
             activityResult.data?.extras?.let { extras ->
                 val characterUpdated =
@@ -37,13 +37,15 @@ class MainActivity : AppCompatActivity() {
                     else extras.getSerializable(Constants.CHARACTER) as? Character
 
                 characterUpdated?.let { newCharacter ->
-                    val newList: ArrayList<Character>? = adapter.currentList as? ArrayList<Character>
-                    newList?.replaceAll {
-                        if (it.id == newCharacter.id)
-                            newCharacter
-                        else it
+                    val oldCharacter = adapter.currentList.find { it.id == newCharacter.id }
+                    oldCharacter?.let { old ->
+                        val newList = adapter.currentList.toMutableList()
+                        val index = adapter.currentList.indexOf(old)
+                        newList[index] = newCharacter
+                        adapter.submitList(newList) {
+                            adapter.notifyItemChanged(index)
+                        }
                     }
-                    adapter.submitList(newList)
                 }
             }
         }
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         adapter = CharactersAdapter {
-            startActivity(
+            launcher.launch(
                 Intent(this, CharacterActivity::class.java)
                     .putExtra(Constants.CHARACTER, it)
             )
