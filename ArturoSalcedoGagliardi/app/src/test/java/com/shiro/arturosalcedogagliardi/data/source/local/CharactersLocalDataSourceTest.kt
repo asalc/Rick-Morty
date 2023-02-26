@@ -57,7 +57,33 @@ class CharactersLocalDataSourceTest {
         }
     }
 
+    @Test
+    fun `When a character's details are requested, they are retrieved successfully from the data source`() {
+        testCoroutineRule.runTest {
+            //GIVEN
+            coEvery { charactersDao.getCharacterDetails(any()) } returns getMockCharacter()
 
+            //WHEN
+            val response = charactersLocalDataSource.getCharacterDetails(getMockCharacter().id ?: 0)
+
+            //THEN
+            assert(response?.id == getMockCharacter().id)
+        }
+    }
+
+    @Test
+    fun `When a character's details are requested, the character is not found, so null is returned`() {
+        testCoroutineRule.runTest {
+            //GIVEN
+            coEvery { charactersDao.getCharacterDetails(any()) } returns null
+
+            //WHEN
+            val response = charactersLocalDataSource.getCharacterDetails(getMockCharacter().id ?: 0)
+
+            //THEN
+            assert(response == null)
+        }
+    }
 
     private fun getMockResult(): List<CharacterLocal> {
         val characters = mutableListOf<CharacterLocal>()
@@ -66,4 +92,6 @@ class CharactersLocalDataSourceTest {
         }
         return characters
     }
+
+    private fun getMockCharacter() = CharacterLocal(id = 5)
 }

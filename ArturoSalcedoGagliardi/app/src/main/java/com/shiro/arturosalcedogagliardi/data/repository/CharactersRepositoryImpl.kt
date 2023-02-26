@@ -10,6 +10,7 @@ import com.shiro.arturosalcedogagliardi.domain.model.Character
 import com.shiro.arturosalcedogagliardi.domain.model.CharacterResult
 import com.shiro.arturosalcedogagliardi.domain.repository.CharactersRepository
 import com.shiro.arturosalcedogagliardi.helpers.Constants
+import com.shiro.arturosalcedogagliardi.helpers.extensions.parseException
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(
@@ -67,7 +68,11 @@ class CharactersRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateCharacter(character: Character): Result<Boolean> {
-        return charactersLocalDataSource.updateCharacterFromDomain(character.toLocal())
+        return try {
+            charactersLocalDataSource.updateCharacterFromDomain(character.toLocal())
+        } catch (exception: Exception) {
+            Result.failure(exception.parseException())
+        }
     }
 
     override suspend fun deleteCharacter(character: Character): Result<Int?> {
