@@ -42,6 +42,12 @@ android {
     buildFeatures {
         dataBinding true
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -71,6 +77,8 @@ dependencies {
 
     //Hilt
     implementation "com.google.dagger:hilt-android:2.44.2"
+    implementation 'androidx.test:core-ktx:1.5.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-testing:2.5.1'
     kapt "com.google.dagger:hilt-android-compiler:2.44.2"
 
     //Glide
@@ -87,12 +95,7 @@ dependencies {
 
     //Testing
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
-    testImplementation 'androidx.test:runner:1.5.2'
-    testImplementation "androidx.test:rules:1.5.0"
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
-    testImplementation 'app.cash.turbine:turbine:0.12.1'
     testImplementation "io.mockk:mockk:1.12.4"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 }
